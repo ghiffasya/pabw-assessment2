@@ -72,7 +72,19 @@
             });
         });
 
-        
+        // Menghapus data ketika tombol hapus diklik
+        function hapusObat(idObat) {
+            $.ajax({
+                type: "POST",
+                url: "hapus_obat.php", 
+                data: { id_obat: idObat }, // Kirim ID obat ke server
+                success: function(response) {
+                    if (response == "success") {
+                        // Hapus baris obat dari tabel setelah berhasil dihapus
+                        $("#obat-table tbody tr[data-id='" + idObat + "']").remove();
+                    } else {
+                        alert("Gagal menghapus obat!");
+                    }
                 }
             });
             console.log(idObat)
