@@ -43,6 +43,36 @@
     </style>
     <script>
         $(document).ready(function() {
+            // Panggil data obat dari server
+            $.ajax({
+                url: "get_obat_json.php", 
+                dataType: "json", // Format data yang diharapkan
+                success: function(data) {
+                    // Tampilkan data obat dalam format HTML
+                    var html = "";
+                    $.each(data, function(index, obat) {
+                        html += "<tr>";
+                        html += "<td>" + obat.nama_obat + "</td>";
+                        html += "<td>" + obat.jenis_obat + "</td>";
+                        html += "<td>" + obat.harga_beli + "</td>";
+                        html += "<td>" + obat.harga_jual + "</td>";
+                        html += "<td>" + obat.stok + "</td>";
+                        html += "<td>" + obat.tanggal_kadaluarsa + "</td>";
+                        html += "<td><button class='hapus-obat' data-id='" + obat.id_obat + "'>Hapus</button></td>";
+                        html += "</tr>";
+                    });
+                    $("#obat-table tbody").html(html);
+
+                    // Menambahkan event listener untuk tombol hapus
+                    $('.hapus-obat').click(function() {
+                        var idObat = $(this).data('id');
+                        hapusObat(idObat);
+                    });
+                }
+            });
+        });
+
+        
                 }
             });
             console.log(idObat)
